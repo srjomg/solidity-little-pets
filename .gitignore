@@ -1,0 +1,28 @@
+.DS_STORE
+/target*
+/*.sol
+CLAUDE.md
+
+# Foundry artifacts
+lib/
+out/
+snapshots/
+cache/
+
+# IDEs and extensions
+.idea
+.vscode
+.claude
+.zed
+
+# NPM
+.env
+node_modules
+dist
+bin
+_
+*.tgz
+.vercel
+.vite
+.wrangler
+*.zip
