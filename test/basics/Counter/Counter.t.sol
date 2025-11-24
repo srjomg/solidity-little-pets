@@ -16,6 +16,10 @@ contract CounterTest is Test {
         assertEq(counter.count(), 0);
     }
 
+    function test_InitialCyclical() public view {
+        assertEq(counter.cyclical(), false);
+    }
+
     function test_SetCount() public {
         uint256 newCount = 999999;
         counter.setCount(newCount);
@@ -23,7 +27,7 @@ contract CounterTest is Test {
         assertEq(counter.count(), newCount);
     }
 
-    function test_Increment() public {
+    function test_NotCyclicalIncrement() public {
         uint256 initCount = 123;
         counter.setCount(initCount);
 
@@ -32,7 +36,7 @@ contract CounterTest is Test {
         assertEq(counter.count(), initCount + 1);
     }
 
-    function test_Decrement() public {
+    function test_NotCyclicalDecrement() public {
         uint256 initCount = 123;
         counter.setCount(initCount);
 
@@ -41,17 +45,21 @@ contract CounterTest is Test {
         assertEq(counter.count(), initCount - 1);
     }
 
-    function test_CannotDecrementBelowMin() public {
-        counter.setCount(type(uint256).min);
-
-        vm.expectRevert(stdError.arithmeticError);
-        counter.decrement();
-    }
-
-    function test_CannotIncrementBeyondMax() public {
+    function test_CyclicalIncrement() public {
+        counter.setCyclical(true);
         counter.setCount(type(uint256).max);
 
-        vm.expectRevert(stdError.arithmeticError);
         counter.increment();
+
+        assertEq(counter.count(), type(uint256).min);
+    }
+
+    function test_CyclicalDecrement() public {
+        counter.setCyclical(true);
+        counter.setCount(type(uint256).min);
+
+        counter.decrement();
+
+        assertEq(counter.count(), type(uint256).max);
     }
 }
