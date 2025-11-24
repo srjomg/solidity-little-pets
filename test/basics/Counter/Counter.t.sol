@@ -2,7 +2,6 @@
 pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
-import {stdError} from "forge-std/StdError.sol";
 import {Counter} from "src/basics/Counter/Counter.sol";
 
 contract CounterTest is Test {
@@ -27,7 +26,7 @@ contract CounterTest is Test {
         assertEq(counter.count(), newCount);
     }
 
-    function test_NotCyclicalIncrement() public {
+    function test_Increment() public {
         uint256 initCount = 123;
         counter.setCount(initCount);
 
@@ -36,13 +35,27 @@ contract CounterTest is Test {
         assertEq(counter.count(), initCount + 1);
     }
 
-    function test_NotCyclicalDecrement() public {
+    function test_Decrement() public {
         uint256 initCount = 123;
         counter.setCount(initCount);
 
         counter.decrement();
 
         assertEq(counter.count(), initCount - 1);
+    }
+
+    function test_CannotIncrement() public {
+        counter.setCount(type(uint256).max);
+
+        vm.expectRevert("Counter cannot be SO big");
+        counter.increment();
+    }
+
+    function test_CannotDecrement() public {
+        counter.setCount(type(uint256).min);
+
+        vm.expectRevert("Counter cannot be negative");
+        counter.decrement();
     }
 
     function test_CyclicalIncrement() public {
@@ -62,4 +75,6 @@ contract CounterTest is Test {
 
         assertEq(counter.count(), type(uint256).max);
     }
+
+
 }

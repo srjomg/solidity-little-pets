@@ -14,30 +14,26 @@ contract Counter {
     }
 
     function increment() public {
-        uint256 max = type(uint256).max;
-
         if (cyclical) {
-            if (count == max) {
+            if (count == type(uint256).max) {
                 count = 0;
                 return;
             }
         }
 
-        require(count < max, "Counter cannot be SO big");
+        require(count < type(uint256).max, "Counter cannot be SO big");
         count++;
     }
 
     function decrement() public {
-        uint256 min = type(uint256).min;
-
         if (cyclical) {
-            if (count == min) {
+            if (count == type(uint256).min) {
                 count = type(uint256).max;
                 return;
             }
         }
 
-        require(count > 0, "Counter cannot be negative");
+        require(count > type(uint256).min, "Counter cannot be negative");
         count--;
     }
 }
