@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 contract HelloWorld {
-    string text;
+    string public text;
 
     constructor() {
         text = "Hello, World!";

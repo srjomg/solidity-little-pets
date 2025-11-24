@@ -1,7 +1,5 @@
-.DS_STORE
-/target*
-/*.sol
-CLAUDE.md
+# Own
+keys/
 
 # Foundry artifacts
 lib/
