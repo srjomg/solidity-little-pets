@@ -3,13 +3,13 @@ pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
 import {stdError} from "forge-std/StdError.sol";
-import {SimpleCounter} from "src/basics/SimpleCounter/SimpleCounter.sol";
+import {Counter} from "src/basics/Counter/Counter.sol";
 
-contract SimpleCounterTest is Test {
-    SimpleCounter public counter;
+contract CounterTest is Test {
+    Counter public counter;
 
     function setUp() public {
-        counter = new SimpleCounter();
+        counter = new Counter();
     }
 
     function test_InitialCount() public view {
@@ -19,6 +19,7 @@ contract SimpleCounterTest is Test {
     function test_SetCount() public {
         uint256 newCount = 999999;
         counter.setCount(newCount);
+        
         assertEq(counter.count(), newCount);
     }
 
