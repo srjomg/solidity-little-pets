@@ -26,4 +26,9 @@ contract UserStorageTest is Test {
 
         vm.stopPrank();
     }
+
+    function test_CannotGetUser() public {
+        vm.expectRevert("User don't exist");
+        userstorage.getUser(address(0x1));
+    }
 }

@@ -15,6 +15,10 @@ contract UserStorage {
 
     function getUser(address addr) public view returns (string memory, uint8) {
         User memory user = users[addr];
+        if (user.age == 0 && bytes(user.name).length == 0) {
+            revert("User don't exist");
+        }
+
         return (user.name, user.age);
     }
 }
