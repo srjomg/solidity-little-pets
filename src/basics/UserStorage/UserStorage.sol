@@ -5,14 +5,11 @@ contract UserStorage {
     struct User {
         string name;
         uint8 age;
-        uint256 createTime;
-        uint256 updateTime; 
     }
 
-    uint256 userCount;
-    mapping(address => User) users;
+    mapping(address => User) public users;
 
-    function createUser() {
-        
+    function updateUser(string calldata newName, uint8 newAge) public {
+        users[msg.sender] = User(newName, newAge);
     }
 }
