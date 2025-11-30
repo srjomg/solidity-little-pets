@@ -12,4 +12,9 @@ contract UserStorage {
     function updateUser(string calldata newName, uint8 newAge) public {
         users[msg.sender] = User(newName, newAge);
     }
+
+    function getUser(address addr) public view returns (string memory, uint8) {
+        User memory user = users[addr];
+        return (user.name, user.age);
+    }
 }
