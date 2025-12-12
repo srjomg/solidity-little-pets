@@ -11,6 +11,30 @@ contract UserStorageTest is Test {
         userstorage = new UserStorage();
     }
 
+    function test_CannotSetEmptyName() public {
+        address creator = address(0x11111);
+        string memory creatorName = "";
+        uint8 creatorAge = 25;
+
+        vm.deal(creator, 1 ether);
+        vm.startPrank(creator);
+
+        vm.expectRevert("Name cannot be empty");
+        userstorage.updateUser(creatorName, creatorAge);
+    }
+
+    function test_CannotSetZeroAge() public {
+        address creator = address(0x11111);
+        string memory creatorName = "Alex";
+        uint8 creatorAge = 0;
+
+        vm.deal(creator, 1 ether);
+        vm.startPrank(creator);
+
+        vm.expectRevert("Age cannot be equal zero");
+        userstorage.updateUser(creatorName, creatorAge);
+    }
+
     function test_UpdateAndGetUser() public {
         address creator = address(0x11111);
         string memory creatorName = "Alex";
