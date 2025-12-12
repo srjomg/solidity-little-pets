@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+/**
+ */
 contract UserStorage {
     struct User {
         string name;
@@ -10,6 +12,8 @@ contract UserStorage {
     mapping(address => User) public users;
 
     function updateUser(string calldata newName, uint8 newAge) public {
+        require(bytes(newName).length > 0, "Name cannot be empty");
+        require(newAge > 0, "Age cannot be equal zero");
         users[msg.sender] = User(newName, newAge);
     }
 
