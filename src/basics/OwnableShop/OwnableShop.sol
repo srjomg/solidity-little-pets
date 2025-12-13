@@ -20,7 +20,6 @@ contract Ownable {
 
 contract OwnableShop is Ownable {
     uint256 public fee;
-    
     mapping(uint256 id => uint256 price) public products;
 
     constructor(uint256 initFee) {
@@ -43,7 +42,7 @@ contract OwnableShop is Ownable {
 
         require(
             msg.value == products[id] + fee,
-            "Not enough money."
+            "Not enough money sent."
         );
     }
 }
